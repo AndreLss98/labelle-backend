@@ -7,11 +7,17 @@ const Servico = require('./../repositorys/servico');
  * Cadastra um profissional novo
  */
 routes.post('/', async (req, res, next) => {
+    let { local } = req.body;
+    if (!local) return res.status(400).send({ error: "Local is required" });
+    delete req.body.local;
+
     try {
         const profissional = await Profissional.save(req.body);
+        local.profissional_id = profissional.id;
+        await Profissional.saveLocal(local);
         return res.status(200).send(profissional);
     } catch(error) {
-        return res.status(400).send({ error: "Register failed" });
+        return res.status(400).send({ error });
     }
 });
 

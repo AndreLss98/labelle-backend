@@ -71,6 +71,12 @@ const reserva = new GraphQLObjectType({
             resolve({id}, _) {
                 return ServicoReserva.getAllByReserva(id);
             }
+        },
+        profissional: {
+            type: profissional,
+            resolve({ profissional_id }, _) {
+                return Profissional.getById(profissional_id);
+            }
         }
     })
 });
@@ -113,6 +119,48 @@ const profissional = new GraphQLObjectType({
         },
         img_perfil: {
             type: GraphQLString
+        },
+        local: {
+            type: local,
+            resolve({ id }, _) {
+                return Profissional.getLocal(id);
+            }
+        }
+    })
+});
+
+const local = new GraphQLObjectType({
+    name: "Local",
+    fields: () => ({
+        profissional_id: {
+            type: GraphQLInt
+        },
+        cep: {
+            type: GraphQLString
+        },
+        rua: {
+            type: GraphQLString
+        },
+        setor: {
+            type: GraphQLString
+        },
+        numero: {
+            type: GraphQLInt
+        },
+        quadra: {
+            type: GraphQLInt
+        },
+        cidade: {
+            type: GraphQLString
+        },
+        estado: {
+            type: GraphQLString
+        },
+        latitude: {
+            type: GraphQLFloat
+        },
+        longitude: {
+            type: GraphQLFloat
         }
     })
 });
@@ -194,6 +242,23 @@ const schema = new GraphQLSchema({
                 type: new GraphQLList(servico),
                 resolve() {
                     return Servico.getAll();
+                }
+            },
+            reservas: {
+                type: new GraphQLList(reserva),
+                args: {
+                    cliente_id: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    },
+                    mes: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    },
+                    ano: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    }
+                },
+                resolve(_, args) {
+                    return Reserva.getAllOfMonth(args.cliente_id, args.mes, args.ano);
                 }
             }
         }

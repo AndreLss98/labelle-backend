@@ -1,5 +1,6 @@
 const db = require('./../configs/kenx');
 
+const SUB_TABLE = 'local';
 const TABLE = 'profissional';
 
 const Servico = require('./../repositorys/servico');
@@ -20,4 +21,14 @@ module.exports = {
             throw error;
         }
     },
+    async saveLocal(local) {
+        try {
+            return await db(SUB_TABLE).insert(local);
+        } catch(error) {
+            throw error;
+        }
+    },
+    async getLocal(profissional_id) {
+        return db(SUB_TABLE).where({ profissional_id }).first();
+    }
 }

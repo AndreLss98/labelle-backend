@@ -13,5 +13,8 @@ module.exports = {
         } catch(error) {
             throw error;
         }
+    },
+    async getAllOfMonth(cliente_id, mes, ano) {
+        return db(TABLE).where({ cliente_id, mes, ano });
     }
 }

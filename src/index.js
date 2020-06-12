@@ -2,12 +2,15 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const SERVER_PORT = process.env.PORT || 8080;
 
 const bodyParser = require('body-parser');
 
 const schema = require('./configs/schema');
 const graphqlApp = require('express-graphql');
+
+app.use(cors());
 
 app.use('/api', graphqlApp({ schema, graphiql: true }));
 
