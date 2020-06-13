@@ -125,6 +125,36 @@ const profissional = new GraphQLObjectType({
             resolve({ id }, _) {
                 return Profissional.getLocal(id);
             }
+        },
+        disponibilidade: {
+            type: disponibilidade,
+            resolve({ id }, _) {
+                return Profissional.getDisponibilidade(id);
+            }
+        },
+        servicos: {
+            type: new GraphQLList(profissionalServico),
+            resolve({ id }, _) {
+                return Profissional.getAllServices(id);
+            }
+        }
+    })
+});
+
+const disponibilidade = new GraphQLObjectType({
+    name: "Disponibilidade",
+    fields: () => ({
+        profissional_id: {
+            type: GraphQLInt
+        },
+        dias_semana: {
+            type: GraphQLString
+        },
+        horario_inicio: {
+            type: GraphQLString
+        },
+        horario_fim: {
+            type: GraphQLString
         }
     })
 });
@@ -197,6 +227,12 @@ const profissionalServico = new GraphQLObjectType({
         },
         disponivel: {
             type: GraphQLBoolean
+        },
+        tipo: {
+            type: servico,
+            resolve({ servico_id }, _) {
+                return Servico.getById(servico_id);
+            }
         }
     })
 });
@@ -227,6 +263,12 @@ const schema = new GraphQLSchema({
                     return Profissional.getById(args.id);
                 }
             },
+            profissionais: {
+                type: new GraphQLList(profissional),
+                resolve() {
+                    return Profissional.getAll();
+                }
+            },
             servico: {
                 type: servico,
                 args: {
@@ -242,6 +284,17 @@ const schema = new GraphQLSchema({
                 type: new GraphQLList(servico),
                 resolve() {
                     return Servico.getAll();
+                }
+            },
+            reserva: {
+                type: reserva,
+                args: {
+                    id: {
+                        type: new GraphQLNonNull(GraphQLInt)
+                    }
+                },
+                resolve(_, { id }) {
+                    return Reserva.getById(id);
                 }
             },
             reservas: {

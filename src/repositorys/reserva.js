@@ -6,6 +6,9 @@ module.exports = {
     async getAllByClienteId(cliente_id) {
         return await db(TABLE).where({ cliente_id });
     },
+    async getById(id) {
+        return await db(TABLE).where({ id }).first();
+    },
     async save(reserva) {
         try {
             const id = await db(TABLE).insert(reserva);
