@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/index.js",
+    "migrate-db": "(cd src/configs/ && knex migrate:latest)",
+    "seed-db": "(cd src/configs/ && knex seed:run)",
+    "up-db": "(cd src/configs/ && knex migrate:up)",
+    "down-db": "(cd src/configs/ && knex migrate:down)",
     "dev": "nodemon src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -1,4 +1,4 @@
-const db = require('./../configs/kenx');
+const db = require('./../configs/knex');
 
 const TABLE = 'servico';
 const RELATION_TABLE = 'profissional_servico';

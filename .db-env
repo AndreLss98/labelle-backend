@@ -1,0 +1,6 @@
+module.exports = {
+    DB: 'labelle_homolog',
+    DB_HOST: 'labelle-db',
+    DB_USER: 'root',
+    DB_PASSWORD: 'Maximusv11!'
+}

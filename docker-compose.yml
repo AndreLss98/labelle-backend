@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+    db:
+        image: mysql
+        container_name: labelle-db
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_USER: ${DB_USER}
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB}
+        volumes:
+            - ./db:/var/lib/mysql
+    api:
+        build: "./"
+        container_name: labelle-api
+        volumes:
+            - .:/usr/app
+        ports:
+            - "8080:8080"
+        depends_on:
+            - db

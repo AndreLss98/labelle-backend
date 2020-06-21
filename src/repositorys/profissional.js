@@ -1,4 +1,4 @@
-const db = require('./../configs/kenx');
+const db = require('./../configs/knex');
 
 const SUB_TABLE_LOCAL = 'local';
 const SUB_TABLE_DISPONIBILIDADE = 'disponibilidade';
