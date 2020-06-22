@@ -8,4 +8,4 @@ RUN npm install
 
 CMD npm run dev
 
-EXPOSE 8080
+EXPOSE 8081
